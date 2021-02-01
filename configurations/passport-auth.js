@@ -70,7 +70,7 @@ passport.use(
     {
       clientID: process.env.CLIENT_ID_FACEBOOK,
       clientSecret: process.env.CLIENT_SECRET_FACEBOOK,
-      callbackURL: "http://localhost:3000/oauth/facebook/callback",
+      callbackURL: "https://serverkosku.herokuapp.com/oauth/facebook/callback",
       profileFields: ["id", "displayName", "email", "photos", "name"],
     },
     function (accessToken, refreshToken, profile, done) {
@@ -100,7 +100,7 @@ passport.use(
     {
       clientID: process.env.CLIENT_ID_GOOGLE,
       clientSecret: process.env.CLIENT_SECRET_GOOGLE,
-      callbackURL: "http://localhost:3000/oauth/google/callback",
+      callbackURL: "https://serverkosku.herokuapp.com/oauth/google/callback",
     },
     function (accessToken, refreshToken, profile, done) {
       process.nextTick(function () {
