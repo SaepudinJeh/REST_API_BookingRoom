@@ -59,6 +59,10 @@ OwnerSchema.pre("save", async function (next) {
     if (this.isNew) {
       const hashedPassword = await bcrypt.hash(this.password, 10);
       this.password = hashedPassword;
+
+      if (this.email === process.env.ADMIN_KOSKU) {
+        this.userType = roles.admin;
+      }
     }
     next();
   } catch (error) {
