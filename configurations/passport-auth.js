@@ -75,7 +75,7 @@ passport.use(
     },
     function (accessToken, refreshToken, profile, done) {
       process.nextTick(function () {
-        UserFbSchema.findOne({ facebookId: profile.id }, (err, oldUser) => {
+        Costumer.findOne({ facebookId: profile.id }, (err, oldUser) => {
           if (!oldUser) {
             const newUser = new UserFbSchema({
               facebookId: profile.id,
@@ -104,7 +104,7 @@ passport.use(
     },
     function (accessToken, refreshToken, profile, done) {
       process.nextTick(function () {
-        UserGoogleSchema.findOne({ googleId: profile.id }, (err, oldUser) => {
+        Costumer.findOne({ googleId: profile.id }, (err, oldUser) => {
           if (oldUser) {
             done(null, oldUser);
           } else {
