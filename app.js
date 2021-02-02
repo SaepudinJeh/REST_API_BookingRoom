@@ -23,7 +23,7 @@ app.use(async (req, res, next) => {
 });
 
 app.use((error, req, res, next) => {
-  error.status = error.status || 500;
+  error.status = error.status || 500 || 503;
   res.status(error.status);
   res.send({
     error: {
