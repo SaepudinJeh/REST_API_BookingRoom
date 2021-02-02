@@ -7,7 +7,6 @@ const timeId = require("../configurations/timeID");
 const FbSchema = new mongoose.Schema({
   facebookId: {
     type: String,
-    required: true,
     unique: true,
   },
   fullName: {
@@ -59,7 +58,6 @@ const FbSchema = new mongoose.Schema({
 const GoogleSchema = new mongoose.Schema({
   googleId: {
     type: String,
-    required: true,
     unique: true,
   },
   fullName: {
