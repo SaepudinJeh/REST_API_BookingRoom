@@ -59,6 +59,7 @@ const GoogleSchema = new mongoose.Schema({
   googleId: {
     type: String,
     unique: true,
+    default: null
   },
   fullName: {
     type: String,
