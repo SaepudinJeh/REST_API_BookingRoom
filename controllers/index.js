@@ -3,4 +3,5 @@ module.exports = {
   Admin: require("./admin"),
   Costumer: require("./costumer"),
   Owner: require("./owner"),
+  Rooms: require('./rooms/')
 };

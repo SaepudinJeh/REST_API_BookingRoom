@@ -11,7 +11,7 @@ module.exports = (app) => {
       resave: false,
       saveUninitialized: false,
       cookie: {
-        secure: true,
+        httpOnly: true,
       },
       store: new MongoStore({ mongooseConnection: mongoose.connection }),
     })

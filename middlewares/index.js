@@ -2,6 +2,7 @@ const passport = require("passport");
 const { isAuth, isAdmin } = require("./ensureAuthenticated");
 const avatarCostumer = require("../configurations/upload-avatar-costumer");
 const avatarOwner = require("../configurations/upload-avatar-owner");
+const uploadImageRoom = require('../configurations/upload-image-rooms.js')
 
 module.exports = {
   middlewares: require("./middlewares"),
@@ -15,4 +16,5 @@ module.exports = {
   avatarCostumer,
   isAdmin,
   avatarOwner,
+  uploadImageRoom
 };

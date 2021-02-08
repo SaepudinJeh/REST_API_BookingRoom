@@ -5,6 +5,7 @@ const { userRegister } = require("../../validators");
 
 const ownerLogin = async (req, res, next) => {
   res.json(req.user);
+  console.log(req.user)
 };
 
 const ownerRegister = async (req, res, next) => {

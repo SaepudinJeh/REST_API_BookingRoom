@@ -1,5 +1,7 @@
-const moment = require("moment-timezone");
+const moment = require("moment");
 
-const dateId = moment.tz(Date.now(), "Asia/Jakarta");
+moment.locale('id');
+
+const dateId = moment().format('LLLL');
 
 module.exports = dateId;
