@@ -1,4 +1,5 @@
 const { postRoom, allRooms, getRoomByType, getRoomById, updateRoom, deleteRoom } = require('./rooms.js')
+const { postComment, updateComment, deleteComment } = require('./comment.js')
 
 module.exports = {
 	postRoom,
@@ -6,5 +7,8 @@ module.exports = {
 	getRoomByType,
 	getRoomById,
 	updateRoom,
-	deleteRoom
+	deleteRoom,
+	postComment,
+	updateComment,
+	deleteComment
 }

@@ -4,8 +4,9 @@ const { Owner } = require("../../models");
 const { userRegister } = require("../../validators");
 
 const ownerLogin = async (req, res, next) => {
-  res.json(req.user);
-  console.log(req.user)
+  res.json({
+    message: "Owner login successfully"
+  });
 };
 
 const ownerRegister = async (req, res, next) => {
@@ -30,7 +31,11 @@ const ownerRegister = async (req, res, next) => {
 
     const owner = new Owner(req.body);
     await owner.save();
-    res.json(owner);
+
+    res.json({
+      message: "Register owner successfully"
+    });
+
   } catch (error) {
     next(error);
   }

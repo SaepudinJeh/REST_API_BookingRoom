@@ -64,13 +64,19 @@ const postRoom = async (req, res, next) => {
 const allRooms = async (req, res, next) => {
 	try {
 
-		const rooms = Room.find({}).populate('postedBy', '_id avatar fullName')
+		const rooms = await Room.find({}, 
+			{
+				name: 1, 
+				roomType: 1, 
+				costumerType:1, 
+				lastUpdate: 1, 
+				location: {city: 1, address: 1},
+				pricing: { price: 1}, 
+				images: { $arrayElemAt: [ "$images", 0 ] } 
+			}
+		)
 
-		rooms.exec((err, post) => {
-			if (err) console.log(err)
-
-			res.json(post)
-		})
+		res.json({ rooms: rooms });
 
 	} catch (error) {
 		next(error)
@@ -85,11 +91,17 @@ const getRoomByType = async (req, res, next) => {
 
 		const typeRoom = idTypeRoom[0].toUpperCase() + idTypeRoom.slice(1);
 
-		const rooms = await Room.find({ roomType: typeRoom }).populate('postedBy', '_id avatar fullName');
-
-		if (!rooms) {
-			return next(createError.InternalServerError())
-		}
+		const rooms = await Room.find({ roomType: typeRoom }, 
+			{
+				name: 1, 
+				roomType: 1, 
+				costumerType:1, 
+				lastUpdate: 1, 
+				location: {city: 1, address: 1},
+				pricing: { price: 1}, 
+				images: { $arrayElemAt: [ "$images", 0 ] } 
+			}
+		);
 
 		res.json({rooms});
 
@@ -106,12 +118,20 @@ const getRoomById = async (req, res, next) => {
 		const idRoom = req.params.idRoom;
 
 		const room = await Room.findById(idRoom).populate('postedBy', '_id avatar fullName')
+			.populate({
+				path: 'reviews',
+				select: '_id stars text lastUpdate',
+				populate: {
+					path: 'costumer',
+					select: '_id fullName'
+				}
+			});
 
 		if (!room) {
 			return next(createError.InternalServerError());
 		};
 
-		res.json(room)
+		res.json(room);
 
 	} catch (error) {
 		next(error)

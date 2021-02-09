@@ -13,17 +13,17 @@ const commentSchema = new mongoose.Schema({
 		type: String
 	},
 	room: { type: ObjectId, ref: 'Rooms'},
-	costumer: { type: ObjectId, ref: "Costumers"},
+	costumer: { type: ObjectId, ref: "costumers"},
 	createAt: {
-		type: Date,
+		type: String,
 		default: timeId
 	},
 	lastUpdate: {
-		type: Date,
+		type: String,
 		default: timeId
 	}
 });
 
-const Comment = mongoose.model('comments', commentSchema);
+const Comment = mongoose.model('Comments', commentSchema);
 
 module.exports = Comment;
