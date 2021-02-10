@@ -23,8 +23,9 @@ const postRoom = async (req, res, next) => {
 		// req User   
 		const user = req.user;
 
+		// Parse data
 		const data = {
-			name: req.body.name,
+			nameRoom: req.body.nameRoom,
 			postedBy: {
 				_id: user._id
 			},
@@ -51,7 +52,8 @@ const postRoom = async (req, res, next) => {
 		const response = await Room.create(data);
 		
 		res.json({
-			message: "Post published successfully"
+			message: "Post published successfully",
+			response
 		})
 
 	} catch(err) {
@@ -117,7 +119,11 @@ const getRoomById = async (req, res, next) => {
 
 		const idRoom = req.params.idRoom;
 
-		const room = await Room.findById(idRoom).populate('postedBy', '_id avatar fullName')
+		const room = await Room.findById(idRoom)
+			.populate({
+				path: 'postedBy',
+				select: '_id avatar fullName'
+			})
 			.populate({
 				path: 'reviews',
 				select: '_id stars text lastUpdate',
@@ -169,7 +175,7 @@ const updateRoom = async (req, res, next) => {
 		const saveImages = (typeof files === undefined || files.length == 0) ? images : file;
 
 		const data = {
-			name: req.body.name || room.name,
+			nameRoom: req.body.nameRoom || room.nameRoom,
 			roomType: req.body.roomType || room.roomType,
 			costumerType: req.body.costumerType || room.costumerType,
 			images: saveImages,

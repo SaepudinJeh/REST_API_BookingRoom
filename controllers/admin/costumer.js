@@ -5,17 +5,9 @@ const { Costumer } = require("../../models");
 
 const getCostumers = async (req, res, next) => {
   try {
-    const pageNum = parseInt(req.params.page);
 
-    if (isNaN(pageNum)) {
-      return res.status(400).send("Bad Request");
-    }
-
-    const costumersPage = (pageNum - 1) * 10;
-
-    const costumers = await Costumer.find({ userType: "COSTUMER" })
-      .skip(costumersPage)
-      .limit(10);
+    const costumers = await Costumer.find({ userType: "COSTUMER" });
+    
     res.json({costumers});
   } catch (error) {
     next(error);

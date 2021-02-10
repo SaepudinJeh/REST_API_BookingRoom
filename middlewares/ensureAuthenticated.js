@@ -15,8 +15,30 @@ module.exports = {
       next();
     } else {
       return next(
-        createError.Unauthorized("You are not authorized to see this route")
+        createError.Unauthorized("You are not Admin!")
       );
     }
   },
+  isCostumer: (req, res, next) => {
+    const checkCostumer = req.user.userType;
+
+    if (checkCostumer === roles.costumer) {
+      next()
+    } else {
+      return next(
+        createError.Unauthorized("You are not Costumer!")
+      )
+    }
+  },
+  isOwner: (req, res, next) => {
+    const checkOwner = req.user.userType;
+
+    if (checkOwner === roles.owner) {
+      next();
+    } else {
+      return next(
+        createError.Unauthorized("You are not Owner!")
+      )
+    }
+  }
 };

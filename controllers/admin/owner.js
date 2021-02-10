@@ -5,18 +5,11 @@ const { Owner } = require("../../models");
 
 const getOwners = async (req, res, next) => {
   try {
-    const pageNum = parseInt(req.params.page);
 
-    if (isNaN(pageNum)) {
-      return res.status(400).send("Bad Request");
-    }
+    const owners = await Owner.find({ userType: "OWNER" });
 
-    const ownersPage = (pageNum - 1) * 10;
-
-    const owners = await Owner.find({ userType: "OWNER" })
-      .skip(ownersPage)
-      .limit(10);
     res.json({ owners });
+    
   } catch (error) {
     next(error);
   }

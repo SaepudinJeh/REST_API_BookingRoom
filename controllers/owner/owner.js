@@ -7,7 +7,16 @@ const { Owner } = require("../../models");
 const getOwner = async (req, res, next) => {
   try {
     const ownerId = req.params.ownerId;
-    const owner = await Owner.findById(ownerId);
+    const owner = await Owner.findById(ownerId, {
+      fullName: 1, 
+      avatar: 1,
+      gender: 1,
+      avatar: 1,
+      emailVertification: 1,
+      userType: 1,
+      email: 1,
+      fullAdress: 1
+    })
     res.json(owner);
   } catch (error) {
     next(error);
@@ -21,16 +30,26 @@ const updateOwner = async (req, res, next) => {
 
     const owner = await Owner.findById(ownerId);
 
+    // Data from req.body
+    const data = {
+      gender: req.body.gender || owner.gender,
+      phoneNumber: req.body.phoneNumber || owner.phoneNumber,
+      fullName: req.body.fullName || owner.fullName,
+      fullAdress: req.body.fullAdress || owner.fullAdress
+    }
+
     // Check Id by Owner
     if (!owner) {
       return next(createError.InternalServerError());
     } else {
-      const costumerUpdate = await Owner.findByIdAndUpdate(ownerId, req.body, {
+      const costumerUpdate = await Owner.findByIdAndUpdate(ownerId, data, {
         new: true,
         useFindAndModify: false,
       });
 
-      res.json(costumerUpdate);
+      res.json({
+        message: "update Owner successfully"
+      });
     }
   } catch (error) {
     next(error);

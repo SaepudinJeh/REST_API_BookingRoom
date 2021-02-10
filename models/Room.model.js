@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
 const timeId = require('../configurations/timeID.js')
-const facilities = require('../configurations/facilites.js')
 const roomType = require('../configurations/roomType.js')
 const costumerType = require('../configurations/costumerType.js')
 
@@ -11,9 +10,9 @@ const { ObjectId} = mongoose.Schema.Types
 const RoomSchema = new mongoose.Schema({
 	postedBy: {
 		type: ObjectId, 
-		ref: 'Owners'
+		ref: 'owners'
 	},
-	name: {
+	nameRoom: {
 		type: String,
 		required: true
 	},

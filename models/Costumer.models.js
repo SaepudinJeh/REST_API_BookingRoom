@@ -46,7 +46,7 @@ const CostumerSchema = new mongoose.Schema({
     default: null,
   },
   registerTime: {
-    type: Date,
+    type: String,
     default: timeId,
   },
 });

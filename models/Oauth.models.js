@@ -106,9 +106,9 @@ const GoogleSchema = new mongoose.Schema({
   },
 });
 
-const UserFbSchema = mongoose.model("UserFacebook", FbSchema, "costumers");
+const UserFbSchema = mongoose.model("userFacebook", FbSchema, "costumers");
 const UserGoogleSchema = mongoose.model(
-  "UserGoogle",
+  "userGoogle",
   GoogleSchema,
   "costumers"
 );

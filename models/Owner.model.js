@@ -49,7 +49,7 @@ const OwnerSchema = new mongoose.Schema({
     default: false,
   },
   registerTime: {
-    type: Date,
+    type: String,
     default: timeId,
   },
 });

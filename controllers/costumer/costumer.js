@@ -7,11 +7,20 @@ const { Costumer } = require("../../models");
 const getCostumer = async (req, res, next) => {
   try {
     const costumerId = req.params.costumerId;
-    const costumer = await Costumer.findById(costumerId);
+
+    const costumer = await Costumer.findById(costumerId, {
+      fullName: 1, 
+      avatar: 1,
+      gender: 1,
+      avatar: 1,
+      emailVertification: 1,
+      userType: 1,
+      email: 1, 
+    })
 
     //Check Id by Costumer
     if (!costumer) {
-      return next(createError.InternalServerError());
+      return next(createError.BadRequest());
     }
 
     res.json(costumer);
@@ -26,18 +35,27 @@ const updateCostumer = async (req, res, next) => {
     const costumerId = req.params.costumerId;
     const costumer = await Costumer.findById(costumerId);
 
+    // Data from req.body
+    const data = {
+      gender: req.body.gender || costumer.gender,
+      phoneNumber: req.body.phoneNumber || costumer.phoneNumber,
+      fullName: req.body.fullName || costumer.fullName,
+    }
+
     // Check Id by Costumer
     if (!costumer) {
-      return next(createError.InternalServerError());
+      return next(createError.BadRequest());
     } else {
       const costumerUpdate = await Costumer.findByIdAndUpdate(
         costumer,
-        req.body,
+        data,
         {
           new: true,
         }
       );
-      res.json(costumerUpdate);
+      res.json({
+        message: "Update Costumer successfully"
+      });
     }
   } catch (error) {
     next(error);
@@ -52,7 +70,7 @@ const uploadImage = async (req, res, next) => {
 
     // Check Id by Costumer
     if (!costumer) {
-      return next(createError.InternalServerError());
+      return next(createError.BadRequest());
     }
 
     const data = {
@@ -80,7 +98,7 @@ const deleteImage = async (req, res, next) => {
 
     // Check Id by Costumer
     if (!costumer) {
-      return next(createError.InternalServerError());
+      return next(createError.BadRequest());
     }
 
     // Delete image Cloudinary

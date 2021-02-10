@@ -1,7 +1,7 @@
 const createError = require('http-errors');
 const referralCodeGenerator = require('referral-code-generator');
 
-const { Room, Booking, Owner } = require('../../models/');
+const { Room, Booking, Owner, Costumer } = require('../../models/');
 const timeId = require('../../configurations/timeID.js')
 
 const postBooking = async (req, res, next) => {
@@ -33,7 +33,9 @@ const postBooking = async (req, res, next) => {
 		await Booking.create(data, (err, response) => {
 			if (err) return next(createError.InternalServerError());
 
-			res.json(response);
+			res.json({
+				message: "Booking successfully"
+			});
 		});
 
 	} catch(error) {
@@ -44,17 +46,25 @@ const postBooking = async (req, res, next) => {
 // Get All Booking Costumer
 const getBooking = async (req, res, next) => {
 	const idRoom =  req.params.idRoom;
-	const idUser = req.params.idUser
+	const idCostumer = req.params.idCostumer
 
 	const room = await Room.findById(idRoom);
-	const costumer = await Owner.findById(idCostumer);
+	const costumer = await Costumer.findById(idCostumer);
 
 	// Check params
 	if (!room || !costumer) {
 		return next(createError.BadRequest())
 	};
 
-	const booking = await Booking.find({ costumer: idUser }).populate('room', '_id name');
+	const booking = await Booking.find({ costumer: idCostumer })
+		.populate({
+			path: 'room',
+			select: 'nameRoom pricing'
+		})
+		.populate({
+			path: 'costumer',
+			select: 'fullName'
+		})
 
 	res.json(booking)
 };
@@ -73,8 +83,9 @@ const cancelledBookingCostumer = async (req, res, next) => {
 
 	if (!costumer) {
 		return next(createError.BadRequest('You are not Costumer!'))
-	}
-	const updateBooking = await Booking.findByIdAndUpdate(idBooking, {
+	};
+
+	await Booking.findByIdAndUpdate(idBooking, {
 		$set: {
 			status: "Booking dibatalkan"
 		}
@@ -101,7 +112,7 @@ const cancelledBookingOwner = async (req, res, next) => {
 		return next(createError.BadRequest('You are not Owner!'))
 	}
 
-	const updateBooking = await Booking.findByIdAndUpdate(idBooking, {
+	await Booking.findByIdAndUpdate(idBooking, {
 		$set: {
 			status: "Booking dibatalkan"
 		}
@@ -113,22 +124,31 @@ const cancelledBookingOwner = async (req, res, next) => {
 };
 
 const roomAccepted = async (req, res, next) => {
-	const idBooking = req.params.idBooking
+	const idBooking = req.params.idBooking;
+
+	const idOwner = req.params.idOwner;
 
 	const booking = await Booking.findById(idBooking);
+	const owner = await Owner.findById(idOwner);
 
 	// Check params
 	if (!booking) {
 		return next(createError.BadRequest('room not available'))
 	};
 
-	const updateBooking = await Booking.findByIdAndUpdate(idBooking, {
+	if (!owner) {
+		return next(createError.BadRequest('You are not Owner!'))
+	}
+
+	await Booking.findByIdAndUpdate(idBooking, {
 		$set: {
 			status: "Booking diterima"
 		}
 	})
 
-	res.json(updateBooking)
+	res.json({
+		message: "Booking diterima"
+	});
 }
 
 module.exports = {

@@ -1,11 +1,12 @@
 const router = require("express").Router();
 
-const { Rooms } = require('../controllers/')
+const { Rooms } = require('../controllers/');
+const { isAuth, isCostumer } = require('../middlewares/')
 
 router
-	.post('/:idRoom/post', Rooms.postComment)
-	.put('/:idRoom/update/:idComment', Rooms.updateComment)
-	.delete('/:idRoom/delete/:idComment', Rooms.deleteComment)
+	.post('/:idRoom/post', isAuth, isCostumer, Rooms.postComment)
+	.put('/:idRoom/update/:idComment', isAuth, isCostumer, Rooms.updateComment)
+	.delete('/:idRoom/delete/:idComment', isAuth, isCostumer, Rooms.deleteComment)
 	.get('/:idRoom/allComment', Rooms.getComment)
 
 
