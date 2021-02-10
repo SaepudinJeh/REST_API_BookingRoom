@@ -79,5 +79,5 @@ OwnerSchema.methods.isValidPassword = async function (password) {
   }
 };
 
-const Owner = mongoose.model("Owners", OwnerSchema);
+const Owner = mongoose.model("owners", OwnerSchema);
 module.exports = Owner;

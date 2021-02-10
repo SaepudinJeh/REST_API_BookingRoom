@@ -1,5 +1,9 @@
 
-const { Comment, Room } = require('../../models/')
+const mongoose = require('mongoose');
+const createError = require('http-errors')
+
+const { Comment, Room } = require('../../models/');
+const timeId = require('../../configurations/timeID.js');
 
 const postComment = async (req, res, next) => {
 	const idRoom = req.params.idRoom;
@@ -7,7 +11,7 @@ const postComment = async (req, res, next) => {
 	const room = await Room.findById(idRoom);
 
 	if (!idRoom) {
-		return next(createError.InternalServerError())
+		return next(createError.BadRequest())
 	};
 
 	const user = req.user;
@@ -29,7 +33,9 @@ const postComment = async (req, res, next) => {
 			}
 		})
 
-		res.json(pushComment);
+		res.json({
+			message: 'Post comment successfully'
+		});
 	})
 };
 
@@ -45,7 +51,7 @@ const updateComment = async (req, res, next) => {
 		const comment = await Comment.findById(idComment);
 
 		if (!room || !comment) {
-			return next(createError.InternalServerError())
+			return next(createError.BadRequest())
 		};
 
 		// Req User
@@ -55,7 +61,8 @@ const updateComment = async (req, res, next) => {
 			stars: req.body.stars,
 			text: req.body.text,
 			room: idRoom,
-			costumer: req.user._id
+			costumer: req.user._id,
+			lastUpdate: timeId
 		};
 
 		await Comment.findByIdAndUpdate(idComment, data, async (err, response) => {
@@ -79,7 +86,7 @@ const deleteComment = async (req, res, next) => {
 
 	// Check params
 	if (!room || !comment) {
-		return next(createError.InternalServerError())
+		return next(createError.BadRequest())
 	};
 
 	await Comment.findByIdAndRemove(idComment, (err, response) => {
@@ -91,9 +98,26 @@ const deleteComment = async (req, res, next) => {
 	})
 };
 
+const getComment = async (req, res, next) => {
+	const idRoom = req.params.idRoom;
+
+	// Check _Id Room
+	const room = await Room.findById(idRoom);
+	if (!room) {
+		return next(createError.BadRequest())
+	};
+
+	await Comment.find({room: idRoom}, (err, response) => {
+		if (err) return next(createError.InternalServerError());
+
+		res.json({ Comments: response })
+	});
+}
+
 
 module.exports = {
 	postComment,
 	updateComment,
-	deleteComment
+	deleteComment,
+	getComment
 }

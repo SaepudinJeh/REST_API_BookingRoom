@@ -6,4 +6,5 @@ module.exports = (app) => {
   app.use("/oauth", require("./oauth.routes"));
   app.use('/room', require("./room.routes.js"));
   app.use('/comment', require("./comment.routes.js"));
+  app.use('/booking', require('./booking.routes.js'));
 };

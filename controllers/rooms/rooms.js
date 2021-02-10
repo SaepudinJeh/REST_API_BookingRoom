@@ -128,7 +128,7 @@ const getRoomById = async (req, res, next) => {
 			});
 
 		if (!room) {
-			return next(createError.InternalServerError());
+			return next(createError.BadRequest());
 		};
 
 		res.json(room);
@@ -146,7 +146,7 @@ const updateRoom = async (req, res, next) => {
 		const room = await Room.findById(idRoom);
 
 		if (!room) {
-			return next(createError.InternalServerError());
+			return next(createError.BadRequest());
 		};
 
 		// Req File
@@ -211,14 +211,17 @@ const deleteRoom = async (req, res, next) => {
 		const room = await Room.findById(idRoom);
 
 		if (!room) {
-			return next(createError.InternalServerError());
+			return next(createError.BadRequest());
 		};
 
-		await Room.findByIdAndDelete(idRoom, async (err, response) => {
+		await Room.findByIdAndRemove(idRoom, async (err, response) => {
 			if (err) return next(err);
 
-			await Comment.findById(idRoom, (err, response) => {
+			await Comment.findByIdAndRemove(idRoom, (err, result) => {
+				console.log(result)
+
 				if (err) return next(err);
+
 
 				res.json({
 					message: "Delete room successfully"

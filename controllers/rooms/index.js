@@ -1,5 +1,6 @@
 const { postRoom, allRooms, getRoomByType, getRoomById, updateRoom, deleteRoom } = require('./rooms.js')
-const { postComment, updateComment, deleteComment } = require('./comment.js')
+const { postComment, updateComment, deleteComment, getComment } = require('./comment.js')
+const { postBooking, getBooking, cancelledBookingCostumer, cancelledBookingOwner, roomAccepted } = require('./booking.js')
 
 module.exports = {
 	postRoom,
@@ -10,5 +11,11 @@ module.exports = {
 	deleteRoom,
 	postComment,
 	updateComment,
-	deleteComment
+	deleteComment,
+	getComment,
+	postBooking,
+	getBooking,
+	cancelledBookingCostumer,
+	cancelledBookingOwner,
+	roomAccepted
 }
