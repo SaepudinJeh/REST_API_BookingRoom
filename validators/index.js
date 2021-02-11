@@ -1,6 +1,6 @@
-const { costumerRegister, ownerRegister } = require("./userValidators");
+const { costumerValidator, ownerValidator } = require("./userValidators");
 
 module.exports = {
-  costumerRegister,
-  ownerRegister
+  costumerValidator,
+  ownerValidator
 };

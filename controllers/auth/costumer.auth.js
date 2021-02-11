@@ -1,7 +1,7 @@
 const createError = require("http-errors");
 
 const { Costumer } = require("../../models");
-const { costumerRegister } = require("../../validators");
+const { costumerValidator } = require("../../validators");
 
 const costumerLogin = async (req, res, next) => {
   res.json({
@@ -12,7 +12,7 @@ const costumerLogin = async (req, res, next) => {
 const costumerRegister = async (req, res, next) => {
   try {
     // Validation
-    const validation = costumerRegister.validate(req.body);
+    const validation = costumerValidator.validate(req.body);
     if (validation.error) {
       const err = new Error(validation.error.message);
       err.status = 400;

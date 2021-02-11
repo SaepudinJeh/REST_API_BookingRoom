@@ -1,6 +1,6 @@
 const Joi = require("joi");
 
-const costumerRegister = Joi.object({
+const costumerValidator = Joi.object({
   fullName: Joi.string().required(),
   email: Joi.string().email().required(),
   password: Joi.string()
@@ -9,7 +9,7 @@ const costumerRegister = Joi.object({
     .required(),
 });
 
-const ownerRegister = Joi.object({
+const ownerValidator = Joi.object({
   fullName: Joi.string().required(),
   email: Joi.string().email().required(),
   phoneNumber: Joi.string().required(),
@@ -20,6 +20,6 @@ const ownerRegister = Joi.object({
 });
 
 module.exports = {
-  costumerRegister,
-  ownerRegister
+  costumerValidator,
+  ownerValidator
 };
