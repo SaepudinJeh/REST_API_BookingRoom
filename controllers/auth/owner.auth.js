@@ -1,7 +1,7 @@
 const createError = require("http-errors");
 
 const { Owner } = require("../../models");
-const { userRegister } = require("../../validators");
+const { ownerRegister } = require("../../validators");
 
 const ownerLogin = async (req, res, next) => {
   res.json({
@@ -12,7 +12,7 @@ const ownerLogin = async (req, res, next) => {
 const ownerRegister = async (req, res, next) => {
   try {
     // Validation
-    const validation = userRegister.validate(req.body);
+    const validation = ownerRegister.validate(req.body);
     if (validation.error) {
       const err = new Error(validation.error.message);
       err.status = 400;
