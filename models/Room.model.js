@@ -68,9 +68,6 @@ const RoomSchema = new mongoose.Schema({
 		type: Number,
 		required:true
 	},
-	reviews: [
-		{ type: ObjectId, ref: 'Comments'}
-	],
 	CreateAt: {
 		type: String,
 		default: timeId
