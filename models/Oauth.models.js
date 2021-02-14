@@ -8,6 +8,7 @@ const FbSchema = new mongoose.Schema({
   facebookId: {
     type: String,
     unique: true,
+    default: null
   },
   fullName: {
     type: String,
