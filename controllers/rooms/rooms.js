@@ -52,8 +52,7 @@ const postRoom = async (req, res, next) => {
 		const response = await Room.create(data);
 		
 		res.json({
-			message: "Post published successfully",
-			response
+			message: "Post published successfully"
 		})
 
 	} catch(err) {
