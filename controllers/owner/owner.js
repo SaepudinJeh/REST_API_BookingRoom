@@ -64,7 +64,7 @@ const uploadImage = async (req, res, next) => {
 
     // Check Id by Owner
     if (!owner) {
-      return next(createError.InternalServerError());
+      return next(createError.BadRequest());
     }
 
     const data = {

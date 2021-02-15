@@ -7,8 +7,8 @@ router
   .get("/:costumerId", isAuth, isCostumer, Costumer.getCostumer)
   .put("/:costumerId", isAuth, isCostumer, Costumer.updateCostumer)
   .post(
-    "/upload-image/:costumerId",
-    avatarCostumer.single("avatar"), isAuth, isCostumer,
+    "/upload-image/:costumerId", isAuth, isCostumer,
+    avatarCostumer.single("avatar"),
     Costumer.uploadImage
   )
   .delete("/delete-image/:costumerId", isAuth, isCostumer, Costumer.deleteImage);
