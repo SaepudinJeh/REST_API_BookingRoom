@@ -76,5 +76,5 @@ CostumerSchema.methods.isValidPassword = async function (password) {
   }
 };
 
-const Costumer = mongoose.model("costumers", CostumerSchema);
+const Costumer = mongoose.model("costumers", CostumerSchema, "costumers");
 module.exports = Costumer;

@@ -42,6 +42,13 @@ const costumerRegister = async (req, res, next) => {
 };
 
 const logout = async (req, res, next) => {
+  // Delete session
+  req.session.destroy(null);
+
+  // Clear cookie
+  res.clearCookie('kosku-app', { path: '/' });
+
+  // Clear passport
   req.logout();
   res.send("Success Logout");
 };

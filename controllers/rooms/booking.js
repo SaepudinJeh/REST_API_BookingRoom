@@ -31,7 +31,7 @@ const postBooking = async (req, res, next) => {
 		};
 
 		await Booking.create(data, (err, response) => {
-			if (err) return next(createError.InternalServerError());
+			if (err) return next(err);
 
 			res.json({
 				message: "Booking successfully"
@@ -87,7 +87,8 @@ const cancelledBookingCostumer = async (req, res, next) => {
 
 	await Booking.findByIdAndUpdate(idBooking, {
 		$set: {
-			status: "Booking dibatalkan"
+			status: "Booking dibatalkan",
+			cancelledTime: timeId
 		}
 	})
 
@@ -114,7 +115,8 @@ const cancelledBookingOwner = async (req, res, next) => {
 
 	await Booking.findByIdAndUpdate(idBooking, {
 		$set: {
-			status: "Booking dibatalkan"
+			status: "Booking dibatalkan",
+			cancelledTime: timeId
 		}
 	})
 
@@ -142,13 +144,18 @@ const roomAccepted = async (req, res, next) => {
 
 	await Booking.findByIdAndUpdate(idBooking, {
 		$set: {
-			status: "Booking diterima"
+			status: "Booking diterima",
+			finishedTime: timeId,
+			cancelledTime: null
 		}
+	}, (err) => {
+		if (err) return next(err);
+
+		res.json({
+			message: "Booking diterima"
+		});
 	})
 
-	res.json({
-		message: "Booking diterima"
-	});
 }
 
 module.exports = {

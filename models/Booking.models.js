@@ -13,7 +13,7 @@ const BookingSchema = new mongoose.Schema({
 		defalult: timeId,
 		require: true
 	},
-	bookingType: {
+	rentType: {
 		type: String,
 		require: true
 	},
@@ -42,8 +42,7 @@ const BookingSchema = new mongoose.Schema({
 	status: {
 		type: String,
 		default: 'Menunggu Konfirmasi'
-	},
-	rentType: Number
+	}
 })
 
 const Booking = mongoose.model('bookings', BookingSchema);

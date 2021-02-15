@@ -8,8 +8,8 @@ router
   .get("/:ownerId", isAuth, isOwner, Owner.getOwner)
   .put("/:ownerId", isAuth, isOwner, Owner.updateOwner)
   .post(
-    "/upload-image/:ownerId",
-    avatarOwner.single("avatar"), isAuth, isOwner,
+    "/upload-image/:ownerId",  isAuth, isOwner,
+    avatarOwner.single("avatar"),
     Owner.uploadImage
   )
   .delete("/delete-image/:ownerId", isAuth, isOwner, Owner.deleteImage);
