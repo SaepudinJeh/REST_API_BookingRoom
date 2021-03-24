@@ -77,7 +77,7 @@ const allRooms = async (req, res, next) => {
 			}
 		)
 
-		res.json(rooms);
+		res.json({rooms});
 
 	} catch (error) {
 		next(error)
